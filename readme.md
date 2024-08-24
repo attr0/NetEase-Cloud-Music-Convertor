@@ -39,7 +39,7 @@ A simple set of scripts to
 
 5. play the music
 
-The music caches will be automatically converted into normal music files by your wish.
+The music caches will be automatically converted into normal music files as your wish.
 
 ## Implementation/Configuration Detail
 
@@ -52,4 +52,4 @@ The music caches will be automatically converted into normal music files by your
 4. **Web Panel** can change the state of a task and, thus, restart a task if you manually switch the state into `SUBMITTED` in case of failure.
 
 
-![](./templates/web-screenshot.png)
+![](templates/web-screenshot.png)

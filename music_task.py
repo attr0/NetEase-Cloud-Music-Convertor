@@ -73,6 +73,7 @@ class MusicTask:
             meta['date'] = [datetime.fromtimestamp(meta['date_timestamp']).strftime("%Y/%m/%d")]
             meta['cover_url'] = info['album']['picUrl']
             meta['cover'] = requests.get(meta['cover_url'], stream=True, headers=get_request_header()).raw.read()
+            meta['cover'] = image_compress(meta['cover'], meta['cover_url'].endswith('.png'))
             
             return meta
         except Exception:

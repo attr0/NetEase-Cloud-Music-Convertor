@@ -4,6 +4,8 @@ import random
 import os
 from pynput.keyboard import Key, Controller
 from pathlib import Path
+from PIL import Image
+from io import BytesIO
 
 from config import *
 
@@ -87,3 +89,27 @@ def get_file_size(filepath):
 
 def parse_music_id(filename: str) -> int:
         return int(Path(filename).stem.split('-')[0])
+
+
+def image_compress(image, is_png, max_image_size = 1024 * 1024):
+    img_format = "PNG" if is_png else "JPEG"
+    print("Image len: ", len(image))
+    if len(image) <= max_image_size:    # less than 1MB
+          return image
+
+    with Image.open(BytesIO(image)) as img:
+        # Resize the image
+        img = img.resize((600, 600), Image.ANTIALIAS)
+        img = img.convert('RGB')
+        
+        # Attempt to compress the image and check the size
+        for quality in range(95, 10, -5):  # Start high and reduce quality
+            buffer = BytesIO()
+            img.save(buffer, format=img_format, quality=quality)
+            buffer_size = buffer.tell()  # Get the size of the buffer
+            if buffer_size <= max_image_size:  # Check if the size is less than 500KB
+                print(f"Compressed to quality {quality} with size {buffer_size} bytes")
+                break
+        
+        buffer.seek(0)
+        return buffer.getvalue()

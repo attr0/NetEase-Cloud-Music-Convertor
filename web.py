@@ -18,7 +18,7 @@ db.init_app(app)
 def index():
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 30, type=int)
-    sort_order = request.args.get('sort_order', 'asc', type=str)
+    sort_order = request.args.get('sort_order', 'desc', type=str)
 
     if sort_order == 'desc':
         tasks = Task.query.order_by(Task.task_id.desc()).paginate(page=page, per_page=per_page)
@@ -38,7 +38,7 @@ def update_task(task_id):
     task = Task.query.get(task_id)
     page = request.form.get('page', 1, type=int)
     per_page = request.form.get('per_page', 30, type=int)
-    sort_order = request.form.get('sort_order', 'asc', type=str)
+    sort_order = request.form.get('sort_order', 'desc', type=str)
     if task:
         task.state = request.form['state']
         db.session.commit()

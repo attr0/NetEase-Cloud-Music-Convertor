@@ -2,3 +2,4 @@ Flask-SQLAlchemy
 mutagen
 pynput
 requests
+Pillow

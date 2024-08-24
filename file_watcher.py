@@ -14,7 +14,6 @@ Base.metadata.create_all(engine)
 class Watcher:
     cache_folder = Path(MUSIC_CACHE_FOLDER_PATH)
     submitted_file_set = set(get_all_file_list())  # init
-    _file_size_map = dict()
 
     def get_newly_avaiable_file(self):
         cur_file_set = set()
@@ -43,6 +42,7 @@ class Watcher:
                 music_id = parse_music_id(filepath)
                 music_info = MusicTask.download_info(music_id)
                 music_info.pop('cover')
+                self.submitted_file_set.add(filepath)   # prevent output mutiple times
                 with open('error_music.txt', 'a+') as f:
                     f.write(filepath+":\t"+str(music_info)+'\n')
 
